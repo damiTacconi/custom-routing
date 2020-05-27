@@ -15,14 +15,19 @@ class Request {
 
         switch ($requestMethod) {
           case 'GET':
-              $this->setMandatoryData(Route::getMatch($url));
+              $this->setMandatoryData(Route::urlMatch($url));
             break;
           case 'POST':
-              $this->setMandatoryData(Route::postMatch($url));
+              $this->setMandatoryData(Route::urlMatch($url, 'POST'));
               $this->checkAndSetPostData();
             break;
+          case 'DELETE':
+              $this->setMandatoryData(Route::urlMatch($url, 'DELETE'));
+              $this->checkAndSetPostData();
+          case 'PUT':
+              $this->setMandatoryData(Route::urlMatch($url, 'PUT'));
+              $this->checkAndSetPostData();
           default:
-            // code...
             break;
         }
     }

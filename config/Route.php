@@ -43,12 +43,16 @@ class Route {
         array_push(self::$endpoints['POST'], self::setRoute($path,$controller,$method));
     }
 
-    public static function postMatch($requestUrl){
-      return self::getData(self::$endpoints['POST'], $requestUrl);
+    public static function put($path , $controller, $method){
+        array_push(self::$endpoints['PUT'], self::setRoute($path,$controller,$method));
     }
 
-    public static function getMatch($requestUrl){
-      return self::getData(self::$endpoints['GET'], $requestUrl);
+    public static function delete($path, $controller, $method){
+        array_push(self::$endpoints['DELETE'], self::setRoute($path,$controller,$method));
+    }
+
+    public static function urlMatch($requestUrl , $method = 'GET'){
+      return self::getData(self::$endpoints[$method], $requestUrl);
     }
 
     private static function getData($array, $requestUrl){
@@ -66,7 +70,7 @@ class Route {
       }
       return $data;
     }
-    
+
     private static function getRegex($pattern){
       if (preg_match('/[^-:\/_{}()a-zA-Z\d]/', $pattern))
           return false; // Invalid pattern
